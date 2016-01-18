@@ -1,25 +1,32 @@
-// Gruntfile.js
-
-// our wrapper function (required by grunt and its plugins)
-// all configuration goes inside this function
 module.exports = function(grunt) {
 
-  // ===========================================================================
-  // CONFIGURE GRUNT ===========================================================
-  // ===========================================================================
   grunt.initConfig({
 
-    // get the configuration info from package.json ----------------------------
-    // this way we can use things like name and version (pkg.name)
     pkg: grunt.file.readJSON('package.json'),
 
     uglify: {
+      build: {
+        files: {
+          'public/js/script.min.js': ['src/**/*.js']
+        }
+      }
+    },
+
+    less: {
+      build: {
+        files: {
+          'public/css/style.css': 'src/less/master.less'
+        }
+      }
+    },
+
+    cssmin: {
       options: {
         banner: '/*\n <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> \n*/\n'
       },
       build: {
         files: {
-          'public/js/script.min.js': ['src/**/*.js']
+          'public/css/style.min.css': 'public/css/style.css'
         }
       }
     },
@@ -33,10 +40,12 @@ module.exports = function(grunt) {
   // we can only load these if they are in our package.json
   // make sure you have run npm install so our app can find these
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
   // ===========================================================================
   // CREATE TASKS ==============================================================
   // ===========================================================================
-  grunt.registerTask('default', ['uglify']);
+  grunt.registerTask('default', ['uglify', 'less', 'cssmin']);
 
 };
