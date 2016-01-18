@@ -31,6 +31,19 @@ module.exports = function(grunt) {
       }
     },
 
+    imagemin: {  
+      dynamic: {
+        options: {                       // Target options 
+          optimizationLevel: 7,
+        },                         // Another target 
+        files: [{
+          expand: true,                  // Enable dynamic expansion 
+          cwd: 'src/images/',                   // Src matches are relative to this path 
+          src: ['**/*.{png,jpg,JPG,gif}'],   // Actual patterns to match 
+          dest: 'public/images/'                  // Destination path prefix 
+        }]
+      }
+    },
 
   });
 
@@ -42,6 +55,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-imagemin');
 
   // ===========================================================================
   // CREATE TASKS ==============================================================
